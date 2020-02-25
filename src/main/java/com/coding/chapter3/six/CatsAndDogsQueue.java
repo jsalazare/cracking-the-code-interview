@@ -48,9 +48,14 @@ public class CatsAndDogsQueue {
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("[");
+        int index = 0;
         for (String animal: queue) {
             sb.append(animal);
-            sb.append(", ");
+            if(index < queue.size() - 1){
+                sb.append(", ");
+            }
+            index++;
+
         }
         sb.append("]");
 
