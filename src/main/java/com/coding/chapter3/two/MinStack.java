@@ -2,7 +2,8 @@ package com.coding.chapter3.two;
 
 import java.util.NoSuchElementException;
 
-public class MinStack<T> {
+public class MinStack {
+
     private static class StackNode <T> {
         private T item;
         private StackNode<T> next;
@@ -13,35 +14,42 @@ public class MinStack<T> {
 
     }
 
-    private StackNode<T> top;
+    private StackNode<Integer> top;
+    private StackNode <Integer> min = new StackNode<>(Integer.MAX_VALUE);
 
-    private int min = Integer.MAX_VALUE;
 
-
-    public T pop(){
+    public int pop(){
         if(top == null){
             throw new NoSuchElementException("stack is empty");
         }
-        T item = top.item;
+        int item = top.item;
         top = top.next;
+        if(item == min.item){
+            min = min.next;
+        }
         return item;
     }
 
-    public void push(T item){
-        StackNode<T> newItem = new StackNode<>(item);
+    public void push(int item){
+        StackNode<Integer> newItem = new StackNode<>(item);
         newItem.next = top;
         top = newItem;
-        if(item instanceof Integer && (Integer)item < min){
-            min = (Integer)item;
+        if(item < min.item){
+            StackNode<Integer> newMin = new StackNode<>(item);
+            newMin.next = min;
+            min = newMin;
         }
     }
 
-    public T peak (){
+    public int peak (){
         return top.item;
     }
 
     public int getMin (){
-        return min;
+        if(top==null){
+            return Integer.MAX_VALUE;
+        }
+        return min.item;
     }
 
 
